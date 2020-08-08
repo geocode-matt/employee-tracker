@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
   // Your MySQL username
   user: 'root',
   // Your MySQL password
-  password: 'password',
+  password: 'Norah2018#1',
   database: 'employees'
 });
 
@@ -32,7 +32,8 @@ const mainMenu = [
       "Add Role",
       "Add Employee",
       "Update An Employee's Role",
-      "Update Managers",
+      "View Employees by Department",
+      "View Employees by Role",
       "Exit",
     ],
   },
@@ -71,9 +72,12 @@ function start() {
       case "Update An Employee's Role":
         updateEmployee();
         break;
-        case "Update Managers":
-        updateManagers();
+      case "View Employees by Department":
+        viewByDepartment();
         break;
+      case "View Employees by Role":
+        viewByRole();
+        break;    
       case "Exit":
         connection.end();
         break;
@@ -353,91 +357,33 @@ function updateEmployee() {
   );
 }
 
-//////////// Update a manager ///////////////////
-function updateManagers() {
+//////////// View employees by department  ///////////////////
+function viewByDepartment() {
   connection.query(
-    `SELECT concat(employee.firstName, ' ' ,  employee.lastName) AS Name FROM employee`,
-    function (err, employees) {
+    `SELECT employee.employeeId, employee.firstName, employee.lastName, department.departmentName FROM employee 
+  LEFT JOIN role ON employee.roleId = role.roleId
+  LEFT JOIN department ON role.departmentId = department.departmentId 
+  ORDER BY department.departmentName`,
+    function (err, data) {
       if (err) throw err;
-      managersArr = [];
-      for (i = 0; i < employees.length; i++) {
-        managersArr.push(employees[i].Name);
-      }
-      connection.query("SELECT * FROM role", function (err, res2) {
-        if (err) throw err;
-        inquirer
-          .prompt([
-            {
-              name: "employeeChoice",
-              type: "list",
-              message: "Which employee would you like to update?",
-              choices: employeesArr,
-            },
-            {
-              name: "roleChoice",
-              type: "list",
-              message: "What is this employee's new role?",
-              choices: rolesArr,
-            },
-          ])
-          .then(function (answer) {
-            let roleID;
-            for (let r = 0; r < res2.length; r++) {
-              if (res2[r].title == answer.roleChoice) {
-                roleID = res2[r].roleId;
-              }
-            }
-            connection.query(
-              `UPDATE employee SET roleId = ? WHERE employeeId = (SELECT employeeId FROM(SELECT employeeId FROM employee WHERE CONCAT(firstName," ",lastName) = ?)AS NAME)`,
-              [roleID, answer.employeeChoice],
-              function (err) {
-                if (err) throw err;
-              }
-            );
-            start();
-          });
-      });
+      console.table(data);
+      start();
     }
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-// // View all employees by department
-// function viewByDepartment() {
-//   connection.query(
-//     `SELECT employee.employee_id, employee.first_name, employee.last_name, department.department_name FROM employee 
-//   LEFT JOIN role ON employee.role_id = role.role_id
-//   LEFT JOIN department ON role.department_id = department.department_id 
-//   ORDER BY department.department_name`,
-//     function (err, data) {
-//       if (err) throw err;
-//       console.table(data);
-//       start();
-//     }
-//   );
-// }
-// // View all employees by role
-// function viewByRole() {
-//   connection.query(
-//     `SELECT employee.employee_id, employee.first_name, employee.last_name, role.title, role.salary, department.department_name FROM employee 
-//     LEFT JOIN role ON employee.role_id = role.role_id
-//     LEFT JOIN department ON role.department_id = department.department_id 
-//     ORDER BY role.title`,
-//     function (err, data) {
-//       if (err) throw err;
-//       console.table(data);
-//       start();
-//     }
-//   );
-// }
+//////////// View employees by role  ///////////////////
+function viewByRole() {
+  connection.query(
+    `SELECT employee.employeeId, employee.firstName, employee.lastName, role.title, role.salary, department.departmentName FROM employee 
+    LEFT JOIN role ON employee.roleId = role.roleId
+    LEFT JOIN department ON role.departmentId = department.departmentId 
+    ORDER BY role.title`,
+    function (err, data) {
+      if (err) throw err;
+      console.table(data);
+      start();
+    }
+  );
+}
 
