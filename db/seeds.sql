@@ -1,11 +1,11 @@
-USE employee_DB;
+USE employees;
 
 -- Seeds for department
 INSERT INTO department (departmentId , departmentName)
 VALUES (1, "Human Resources");
 
 INSERT INTO department (departmentId , departmentName)
-VALUES (2, "Sales");
+VALUES (2, "Accounting");
 
 INSERT INTO department (departmentId , departmentName)
 VALUES (3, "Engineering");
@@ -24,10 +24,10 @@ INSERT INTO role (roleId, title, salary, departmentId)
 VALUES (2, "HR Manager", 80000, 1);
 
 INSERT INTO role (roleId, title, salary, departmentId)
-VALUES (3, "Sales Manager", 75000, 2);
+VALUES (3, "Accounting Manager", 75000, 2);
 
 INSERT INTO role (roleId, title, salary, departmentId)
-VALUES (4, "Sales Associate", 40000, 2);
+VALUES (4, "Accountant", 40000, 2);
 
 INSERT INTO role (roleId, title, salary, departmentId)
 VALUES (5, "Engineering Manager", 150000, 3);
@@ -56,7 +56,7 @@ INSERT INTO employee (employeeId, firstName, lastName, roleId, managerId)
 VALUES (2, "Chandler", "Garrett", 2, null);
 
 INSERT INTO employee (employeeId, firstName, lastName, roleId, managerId)
-VALUES (3, "Meera", "Noble", 6, null);
+VALUES (3, "Maurice", "Ryder", 5, null);
 
 INSERT INTO employee (employeeId, firstName, lastName, roleId, managerId)
 VALUES (4, "Tj", "Wu", 10, null);
@@ -77,4 +77,4 @@ INSERT INTO employee (employeeId, firstName, lastName, roleId, managerId)
 VALUES (9, "Qasim", "Maddox", 9, 4);
 
 INSERT INTO employee (employeeId, firstName, lastName, roleId, managerId)
-VALUES (10, "Maurice", "Ryder", 5, 3);
+VALUES (10, "Meera", "Noble", 6, 3);
