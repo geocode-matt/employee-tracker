@@ -18,7 +18,6 @@ const connection = mysql.createConnection({
   database: 'employees'
 });
 
-
 const mainMenu = [
   {
     type: "list",
@@ -47,7 +46,7 @@ connection.connect(function (err) {
   start();
 });
 
-// Offer main menu then prompt next function based on response
+// Offer start menu then prompt next function based on response
 function start() {
   inquirer.prompt(mainMenu).then((response) => {
     switch (response.mainMenu) {
