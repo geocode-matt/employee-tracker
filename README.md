@@ -5,10 +5,11 @@
   * [Installation Instructions](#installation-instructions)
   * [Usage](#usage)
   * [Contribution Guidelines](#contribution-guidelines)
+  * [Questions](#questions)
   
   ## Description
   This application helps you keep track of your company employees and managers!
-    <img src="./screenshot.png">
+  <img src="./screenshot.PNG">
 
   ## Installation Instructions
   Download the application from the GitHub repository here: https://github.com/geocode-matt/employee-tracker.
